@@ -1,0 +1,127 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.advanced-search .operator {
+  margin-bottom: 15px;
+}
+.advanced-search .operator label {
+  margin-right: 5px;
+}
+.advanced-search .heading span {
+  margin-top:12px;
+  margin-left:20px;
+}
+.advanced-search .heading h1 {
+  white-space: nowrap;
+}
+
+.advanced-search .group-operator {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.advanced-search .reset, .submit {
+  width: 100px;
+  margin: 0 4px;
+}
+.advanced-search .search-group {
+  background-color: #EFEBE8;
+  border-bottom: 1px solid #D1CDCB;
+  border-top: 1px solid #D1CDCB;
+  margin-bottom:15px;
+}
+.advanced-search .search-field-row label {
+    display: block;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    width: 0;
+}
+.advanced-search .search-field-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.advanced-search .remove-button,.remove-group-button,.add-button,.add-group-button,.add-group-link {
+  width:20px;
+  height:20px;
+  box-shadow:none;
+  background:none;
+  background:url("../images/icons/ddbIkonographie.png") no-repeat;
+}
+.advanced-search .add-group-button {
+  width:160px;
+  font-size:0.938em;
+  font-weight:normal;
+  text-shadow:none;
+  color:#000000;
+  background-position: 0 0;
+  line-height: 0;
+}
+.advanced-search .add-group-button:hover {
+  color: #990000;
+}
+.advanced-search .remove-button {
+  background-position: -337px -288px;
+}
+.remove-group-button, .remove-group-button:hover {
+  background-position: -28px -474px;
+}
+.advanced-search .add-button, .add-group-link {
+  background-position: -358px -288px
+}
+.advanced-search .remove-button:hover {
+  background-position: -337px -288px;
+}
+.advanced-search .add-button:hover {
+  background-position: -358px -288px
+}
+.add-group-link {
+  cursor: pointer;
+}
+.advanced-search .value {
+  margin-top:1px;
+  height:20px;
+  padding-left:4px;
+}
+.advanced-search .button-group {
+  margin: 10px 0 20px 20px;
+}
+.advanced-search .button-group.fr {
+  text-align: right;
+}
+.advanced-search .row-button-group {
+  margin: 0 0 0 5px;
+}
+.advanced-search .search-field-row .value,.facet,.facet-values,.match {
+  width:100%;
+}
+.advanced-search .bb {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+.advanced-search .bt {
+  border-top: solid 1px #fff;
+}
+.advanced-search .bt .span12 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.advanced-search .tooltip {
+  top: 228px;
+  color: #3e3a37;
+  font-size: 0.938em;
+}
+.advanced-search select, .advanced-search label {
+  font-size: 0.938em;
+}

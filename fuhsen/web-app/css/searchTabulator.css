@@ -1,0 +1,55 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.tabulator {
+  color: #56524F;
+  margin: 10px 0;
+  font-family: inherit;
+  font-size:18px;
+  line-height: 20px;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+
+#tabulator li .active-link {
+  color: #44639A;
+  font-weight: bold;
+  text-decoration: none;
+  word-wrap: break-word;
+}
+
+ul#tabulator   {
+  padding: 0;
+  margin: 0 0 0 0;
+}
+
+#tabulator li {
+  display: inline-block;
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+@media (max-width: 978px){
+  #tabulator li:first-child {
+    display: block;
+  }
+}
+
+#addToSavedSearches {
+  float:right;
+  line-height: 20px;
+  margin: 10px 0;
+}

@@ -1,0 +1,140 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.persons-head .span12 {
+  border-bottom: solid 2px #efebe8;
+}
+
+.persons-head .span12>div {
+   display: inline-block;
+}
+ 
+.persons-head .right-container {
+  line-height: 62px;
+  float: right;
+}
+
+.persons-head .page-link {
+  font-size: 0.938em;
+}
+
+.persons-head .page-link:before {
+  margin-top: 22px;
+}
+
+.persons-head .popup-dialog-title .page-link:before {
+  margin-top: 5px;
+}
+
+.persons-head .socialmedia {
+  padding-top:12px;
+}
+
+.persons-head .popup-dialog-wrapper {
+  margin-top: -48px !important;
+}
+
+.persons-body {
+  padding-top: 20px;
+}
+
+.persons-body img {
+  margin:0;
+}
+
+.persons-results {
+  float: right;
+  padding-right: 45px;
+  height: 70px;
+  overflow: hidden;
+}
+
+.noleftMargin {
+  margin-left: 0px
+}
+
+.features-bar {
+  padding-top: 25px;
+  float: right;
+  text-align: right;
+}
+
+.correctleftMargin30 {
+  margin-left: -30px;
+}
+
+.persons-font {
+  font-family: Calibri,Arial,sans-serif;
+  font-size: 0.938empersons-font;
+  line-height: 1em;
+  color: #3e3a37;
+  margin-top: 3px;
+  word-wrap: break-word;
+}
+
+.persons-font p:first-child a {
+  text-decoration: underline;
+}
+
+.pin {
+  width: 150px;
+}
+
+.pin img {
+  margin-bottom: 3px;
+}
+
+.pin p {
+  font: 12px/18px Calibri, Arial, sans-serif;
+  color: #333;
+  padding: 0 0 0 0;
+}
+
+.pin p a {
+  font-size: 15px;
+}
+
+.persons-overview-content {
+  position: relative;
+}
+
+.persons-overview-content .persons-overview-overlay-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #FFFFFF;
+  opacity: 0.90;
+  filter: alpha(opacity = 90);
+}
+
+.persons-overview-content .persons-overview-overlay-waiting {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.persons-overview-content .persons-overview-overlay-waiting .small-loader {
+  position: relative;
+  top: 50px;
+  left: 45%;
+}
+

@@ -1,0 +1,472 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+/* Displaying only the logo as header*/
+.print-logo {
+  display: block !important;
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+}
+
+.print-logo img {
+  margin-left: 0;
+}
+
+/* Removing unwanted elements */
+
+header, .header, 
+footer, .footer,
+.facets-container, .results-paginator-options, .page-info-nav .page-nav, .results-paginator-view, .information, #print-nav,
+.object-controls, .origin, .slide-viewer .tabs, .sibling-count,
+.group-operator, .add-group-button,
+#first-letter-index li,
+.institutionlist .span3, .institutionlist .multiselect-container, .institutionlist .filter-title, .institutionlist .multiselect,
+#articles-prev, #articles-next, .link-adv-search, .contextual-help,
+#divOSM .sliderStyle-vertical, #divOSM .mapHome,
+#mapContainerDiv .sliderStyle-vertical, #mapContainerDiv .mapHome,
+.favorites-results-container .bookmarks-container, .favorites-results-content .results-pagination,
+.favorites-results-container .email-block, .favorites-results-container .comment-container .comment-input,
+.favorites-results-container .comment-container .comment-button, .favorites-results-container #favorites-copy,
+.favorites-results-container #favorites-remove, #favoritesCopyDialog, #folderCreateConfirmDialog,
+#folderDeleteConfirmDialog, #folderEditConfirmDialog,
+.favorites-results-content .remove-item-check, .favorites-results-content .select-all, .favorites-results-head > .span8,
+.favorites-results-head hr, #favorite-confirmation, .item-detail .favorite, #favoritesModal, #msDeleteFavorites,
+#favoritesDeleteConfirmDialog, .favorites-results-controls, #sendSavedSearchesModal, #deleteSavedSearchesModal,
+#editSavedSearchModal,
+.item-links, .share {
+  display: none;
+}
+
+.fl {
+  float: none !important;
+}
+
+/* Search page */
+.results-list, .matches, #previews-list {
+  list-style: none;
+}
+
+.results-list .item {
+  display: block;
+  margin-left: -40px;
+  min-height: 120px;
+  width: 650px !important;
+  page-break-inside: avoid;
+  border-width: 0 0 2px 0 !important;
+}
+
+.results-list.grid {
+  width: 650px !important;
+  padding: 0 !important;
+  margin-left: 5px !important;  
+}
+
+.results-list.grid .item {
+  display: inline-block;
+  margin-left: -5px;
+  width: 214px !important;
+  page-break-inside: avoid;
+  padding: 15px 0 15px 0 !important;
+  border-width: 2px 0 0 0 !important;
+}
+
+.results-list.grid .thumbnail-wrapper {
+  margin-left: 0 !important;
+  width: 214px !important;
+}
+
+.results-list.grid .summary-main-wrapper {
+  width: 214px !important;
+  top: 120px;
+}
+
+.results-list.grid .extra {
+  display: none !important;
+}
+
+.search-results-list .summary-main-wrapper {
+  width: 490px;
+  position: relative;
+}
+
+.results-list.grid .item .thumbnail-wrapper {
+  margin-left: 0;
+  position: relative;
+}
+
+.results-list.grid .item .summary-main-wrapper {
+  position: static;
+}
+
+.search-results-list .thumbnail-wrapper {
+  width: 160px;
+  top: 0;
+  position: absolute !important;
+  margin-left: 490px !important;
+}
+
+.search-results-list .grid .thumbnail-wrapper {
+  position: relative !important;
+}
+
+.results-list h2 {
+  font-size: 1em;
+}
+
+.search-results .results-list .summary-main-wrapper .title a {
+  font-size: 1.3em;
+}
+
+.search-results .results-list.grid .summary-main-wrapper .title a {
+  font-size: 1.0em !important;
+}
+
+.search-results .results-list .matches {
+  font-size: 1em;
+  line-height: 16px;
+}
+
+.results-list .summary {
+  position: relative;
+}
+
+.results-list .extra {
+  display: none !important;
+  min-height: 20px;
+}
+
+.results-list .extra ul {
+  list-style: none outside none;
+  margin-left: -40px; 
+}
+
+.page-info-nav .page-info {
+  margin-top: 15px;
+  line-height: normal;
+}
+
+.results-list .bt {
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+}
+
+.search-results-content .page-info-nav {
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+  padding-bottom: 15px;
+}
+
+.search-results-content .page-info-nav.grid {
+  border: none !important;
+  padding-bottom: 0 !important;
+}
+
+.search-results-content .page-info-nav .results-label {
+   display: inline;
+}
+
+.search-results-content .page-info-nav .results-overall-index + span {
+  display: inline;
+}
+
+.search-results-content .page-info-nav .results-overall-index:after {
+  content: "";
+}
+
+/* Search page - end*/
+
+
+/* Item detail-view page*/
+.item-detail .institution-name {
+  padding-left: 0;
+  background-image: none;
+}
+
+.item-detail .institution {
+  border-width: 0 0 2px 0 !important;
+  height: 120px;
+  margin-top: 0;
+}
+
+.item-detail .institution .span10 {
+  display: inline-block;
+  width: 480px;
+}
+
+.item-detail .institution .span2 {
+  display: inline-block;
+  width: 130px;
+}
+
+.item-detail .institution .span9 {
+  position: absolute;
+  width: 450px;
+  margin-top: 10px;
+  
+}
+
+.item-detail .institution .span3 {
+  position: absolute;
+  width: 160px;
+  margin-left: 510px !important;
+  margin-top: 10px;
+}
+
+.item-detail .institution .row {
+  position: relative;
+}
+
+.item-detail .institution .span3 img {
+  float: right;
+  display: block;
+}
+
+.item-detail #previews-list {
+  padding-left: 0;
+}
+
+.item-detail .slide-viewer {
+  font-size: 0.938em;
+}
+
+.item-detail .slide-viewer img {
+  margin-left: 0;
+}
+
+.item-detail.linkurl {
+  font-size: 0.938em;
+  display: block !important;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+}
+
+.item-detail .item-description {
+  margin-bottom: 10px;
+}
+
+.item-detail .item-description .span2 {
+  display: inline-table;
+  width: 200px;
+}
+
+.item-detail .item-description .value {
+  display: inline-table;
+  width: 400px;
+}
+
+.item-detail .item-description .value a {
+  margin-left: -20px;
+}
+
+.item-detail .item-description .value .no-external-link-icon {
+  margin-left: 0;
+}
+
+.item-detail .item-hierarchy {
+  font-size: 0.938em;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+}
+
+.item-detail .item-hierarchy .field-header {
+  font-weight: bold;
+}
+
+.item-detail .item-hierarchy-result ul {
+  margin-left: -20px;
+  list-style: square;
+}
+
+.item-detail .item-hierarchy-result li {
+  min-height: 20px;
+}
+
+.item-detail .item-hierarchy-result li .current-node {
+  font-weight: bold;
+}
+
+.item-detail .item-hierarchy .branch-type, .item-hierarchy .leaf-indicator {
+  display: none;
+}
+
+.item-detail .institution-link {
+  margin-left: -20px;
+}
+/* Item detail-view - end */
+
+
+/* Advanced search */
+.search-group {
+  display: block !important;
+}
+/* Advanced search - end */
+
+
+/* Institutions list */
+#first-letter-index li.active {
+  display: block;
+}
+/* Institutions list -end */
+
+
+/* Institution details */
+.institution-item-page #divOSM {
+  width: 555px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.institution-item-page .institution {
+  border-width: 0 0 2px 0;
+  padding: 10px 0 10px 0;
+}
+
+.institution-item-page .institution .count {
+  font-size: 0.682em;
+  font-weight: normal;
+  color: #3e3a37;
+}
+
+.institution-item-page .location-container {
+  margin-top: 10px;
+}
+
+.institution-item-page .institution-list {
+  list-style: square;
+  margin-left: -20px;
+}
+
+.institution-item-page .institution-listitem {
+  list-style: square;
+}
+
+.institution-item-page .institution {
+  border-width: 0 0 2px 0 !important;
+  height: 120px;
+  margin-top: 0;
+}
+
+.institution-item-page .institution .span9 {
+  position: absolute;
+  width: 480px;
+  margin-top: 20px;
+}
+
+.institution-item-page .institution .span3 {
+  position: absolute;
+  width: 130px;
+  margin-left: 515px !important;
+  margin-top: 10px;
+}
+
+.institution-item-page .institution .span3 img {
+  display: block;
+}
+
+.institution-item-page .institution h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 22px;
+}
+
+.institution-item-page .space {
+  margin-right: 6px;
+}
+
+.printViewUrl {
+  display: block !important;
+  border-color: #efebe8;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+  padding: 10px 0 10px 0;
+  margin-top: 100px;
+}
+
+.institution-item-page .institution a {
+  margin-left: -20px;
+}
+
+.institution-item-page .institution .count {
+  margin-left: 0;
+}
+/* Institution details - end */
+
+
+/* Favorites list page */
+
+.favorites-results .item {
+  display: block;
+  margin-left: -40px;
+  min-height: 180px;
+  width: 640px !important;
+  page-break-inside: avoid;
+}
+
+.favorites-results-controls .results-sorter .span6 {
+  display: inline-block;
+  width: 500px;
+  padding-left: 5px;
+}
+
+.favorites-results-controls .results-sorter .added-on {
+  display: inline-block;
+  width: 110px;
+}
+
+.favorites-results .summary-main-wrapper {
+  width: 340px;
+  position: relative;
+}
+
+.favorites-results .thumbnail {
+  width: 160px;
+  top: -15px;
+  position: absolute !important;
+  margin-left: 350px !important;
+  margin-top: 0;
+}
+
+.favorites-results .created-at {
+  width: 120px;
+  top: -5px;
+  position: absolute !important;
+  margin-left: 510px !important;
+}
+
+.favorites-results .results-list .summary-main-wrapper .title a {
+  font-weight: normal;
+}
+
+.favorites-results-controls .results-sorter {
+  background: #efebe8;
+  -webkit-print-color-adjust: exact;
+  line-height: 28px;
+}
+
+.favorites-results .comment-container {
+  margin-top: 45px;
+}
+/* Favorites list page - end */

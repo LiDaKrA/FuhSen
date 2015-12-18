@@ -1,0 +1,239 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+ 
+.static_content {
+  margin: 0 0 0 0;
+  width: 75%;
+  float: left;
+  clear: left;
+}
+
+.static_marginal {
+  width: 23%;
+  margin: 0 0 0 2%;
+  float: right;
+  clear: right;
+}
+.static_content a, .static_marginal a {
+  text-decoration: underline;
+}
+.static_marginal img {
+  margin: 0;
+}
+.static_content h2, .static_marginal h2 {
+  color:#3e3a37;
+  font-weight:normal;
+  margin-top: 5px;
+}
+.static_content .date {
+  font-size: 0.875em;
+  margin: 0;
+}
+.static_content h2 a, .static_marginal h2 a, h2 a {
+  font-weight:normal;
+  font-size: 1em;
+  text-decoration: none;
+}
+.plum-arrow li a:hover, .grey-arrow li a:hover, .lightgrey-arrow li a:hover, .plum-arrow li a:active, 
+.grey-arrow li a:active, .lightgrey-arrow li a:active, .plum-arrow li a:focus, .grey-arrow li a:focus, 
+.lightgrey-arrow li a:focus {
+  text-decoration: underline;
+}
+.static_content h2 a:hover, .static_marginal h2 a:hover, h2 a:hover,
+.static_content h2 a:active, .static_marginal h2 a:active, h2 a:active,
+.static_content h2 a:focus, .static_marginal h2 a:focus, h2 a:focus {
+  text-decoration: underline;
+}  
+.plum-arrow li a, .grey-arrow li a, .lightgrey-arrow li a {
+  text-decoration: none;
+}
+.plum-arrow li, .grey-arrow li, .lightgrey-arrow li {
+  list-style: none outside none;
+  padding-left: 17px;
+  margin-left: -24px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+.plum-arrow li {
+  background: url("../images/icons/listArrowPlum.png") no-repeat 0 4px;
+}
+.grey-arrow li {
+  background: url("../images/icons/listArrowGrey.png") no-repeat 0 4px;
+}
+.no-arrow {
+  background: none !important;
+}
+/*TODO find a solution for the conflict with fl and fr classes*/
+.floatLeft {
+  float: left;
+}
+
+img.floatLeft, .inlineBox.floatLeft {
+  margin: 5px 15px 10px 0;
+}
+
+.floatRight {
+  float: right;
+}
+
+img.floatRight, .inlineBox.floatRight {
+    margin: 5px 0 10px 15px;
+}
+
+.help-bc-active {
+  color: #44639A;
+}
+
+a.help-link:link, a.help-bc-link:link {
+  color: #3E3A37;
+  text-decoration: none;
+}
+
+.link_up {
+  padding-left: 17px;
+  text-decoration: none !important;
+  background: url("../images/icons/listArrowPlumUp.png") no-repeat -3px 6px;
+}
+
+.link_down {
+  padding-left: 17px;
+  text-decoration: none !important;
+  background: url("../images/icons/listArrowPlumDown.png") no-repeat -3px 6px;
+}
+
+a.help-kw-link:link, a.help-kw-link-first:link {
+  text-decoration: none;
+}
+
+a.help-kw-link:hover, a.help-kw-link-first:hover, a.help-link:hover, a.help-bc-link:hover {
+  color: #44639A;
+  text-decoration: underline;
+}
+
+a.help-kw-link-first {
+  color: #3E3A37;
+  float: left;
+  padding: 0;
+  text-align: center;
+  width: 24px;
+}
+
+a.help-kw-link {
+  border-left: 1px solid #CCCCCC;
+  color: #3E3A37;
+  float: left;
+  padding: 0;
+  text-align: center;
+  width: 24px;
+}
+
+.help-kw-nolink {
+  border-left: 1px solid #CCCCCC;
+  color: #878380;
+  float: left;
+  padding: 0;
+  text-align: center;
+  width: 24px;
+}
+
+.help-breadcrumbs {
+  border-bottom: 2px solid #EFEBE8;
+  font-size: 0.875em;
+  padding-bottom: 10px;
+}
+
+.help-keywords {
+  border-bottom: 2px solid #EFEBE8;
+  margin-top: 0;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  height: 20px;
+}
+
+#help-toc-left {
+  left: auto;
+  position: absolute;
+  width: 350px;
+}
+
+#help-toc-right {
+  margin-left: 378px;
+  position: absolute;
+  width: 350px;
+}
+
+@media (max-width: 767px) {
+  .static_content {
+    width: 100%;
+    float: auto;
+    clear: auto;
+  }
+   
+  .static_marginal {
+    width: 100%;
+    float: auto;
+    clear: auto;
+    border-top: 1px solid rgb(233, 229, 226);
+  }
+  #help-toc-left {
+    position: static;
+    width: 100%;
+  }
+  #help-toc-right {
+    margin-left: auto;
+    position: static;
+    width: 100%;
+  }
+}
+
+.static_content hr {
+  height: 2px;
+  color: #efebe8;
+  background: #efebe8;
+  clear: both;
+}
+
+.help-image-left {
+  border: 0;
+  margin: 0 30px 0 0;
+}
+
+.static_content p {
+  margin: 15px 0 15px;
+}
+
+.static_content h3 {
+  clear: both;
+}
+
+.static-content-viewer-error {
+  background-color: #FFFFFF !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #efebe8 !important;
+}
+
+.viewer-error-header {
+  font-weight: bold !important;
+  font-style: italic !important;
+  margin: 20px 20px 0 20px !important;
+}
+
+.viewer-error-body {
+  margin: 20px !important;
+}

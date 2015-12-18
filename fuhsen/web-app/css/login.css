@@ -1,0 +1,106 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+.openid-facebook {
+  background: transparent url("../images/icons/openId.png") no-repeat -80px 0;
+  width: 150px;
+  height: 50px;
+}
+
+.openid-twitter {
+  background: transparent url("../images/icons/openId.png") no-repeat -80px -50px;
+  width: 150px;
+  height: 50px;
+} 
+
+.openid-google {
+  background: transparent url("../images/icons/openId.png") no-repeat -80px -194px;
+  width: 150px;
+  height: 50px;
+}
+
+.openid-yahoo {
+  background: transparent url("../images/icons/openId.png") no-repeat -80px -250px;
+  width: 150px;
+  height: 50px;
+}
+
+.openid-facebook,
+.openid-twitter,
+.openid-google,
+.openid-yahoo {
+  display: inline-block;
+}
+
+.login {
+  font-size:0.938em;
+}
+
+.login .spacer-vertical {
+  margin-top: 15px;
+}
+
+.login .dialog {
+  border-bottom: solid 2px #efebe8;
+  margin-bottom: 15px;
+  margin-left: 0;
+}
+
+.login .feedback {
+  margin-left: 0;
+}
+
+.login .login-error {
+  margin-bottom: 20px;
+}
+
+.login .login-error div {
+  width: 90%;
+  margin: 0;
+}
+
+.login #login-username {
+  width: 200px;
+}
+
+.login #login-password {
+  width: 200px;
+}
+
+.login .login-button {
+  width: 100px;
+}
+
+.login .login-link {
+  padding-left: 17px;
+  height: 25px;
+  line-height: 20px;
+  background: url(../images/icons/listArrows.png) no-repeat 0 1px;
+}
+
+.login .heading {
+  margin-bottom: 15px;
+  border-bottom: solid 2px #efebe8;
+  padding-bottom: 15px;
+}
+
+.login .heading a {
+  text-decoration: underline;
+}
+
+.login .heading h1 {
+  font-size: 1.867em;
+}

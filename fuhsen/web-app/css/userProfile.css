@@ -1,0 +1,114 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#user-profile-form .profile-input {
+  height: 30px !important;
+  padding: 0 6px !important;
+  font-size: 0.938em;
+}
+#user-profile-form .profile-checkbox {
+  margin: 10px -20px !important;
+  width: 16px !important;
+  height: 16px !important;
+  background-color: transparent;
+  outline: none;
+}
+
+#user-profile-form .profile-nav, #password-change-form .profile-nav {
+  display: block;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+}
+
+#user-profile-form .profile-title, #user-profile-form .profile-links {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#user-profile-form .checkbox-label {
+  padding-top: 8px;
+}
+
+#user-profile-form .control-group.bt-white, 
+#password-change-form .control-group.bt-white, 
+#password-reset-form .control-group.bt-white {
+  padding-top: 30px;
+}
+
+#user-profile-form .control-groups {
+  position: relative;
+}
+
+#user-profile-form .control-groups .submit {
+  margin: 0;
+}
+
+#user-profile-form .profile-links {
+  padding-top: 10px;
+  float: right;
+}
+
+#user-profile-form .privacylink {
+  text-decoration: underline;
+}
+
+#sendFavoriteListModal form {
+  margin: 0;
+}
+/* responsive design */
+
+@media (max-width: 1199px) {
+  #user-profile-form label.checkbox-label {
+    width: 60%;
+  }
+  #user-profile-form .controls.checkbox label.error {
+    margin-top: 4px;
+    margin-left: -216px;
+  }
+}
+
+@media (max-width: 767px) {
+  #user-profile-form label.checkbox-label {
+    width: 36%;
+  }
+  #user-profile-form .profile-links {
+    top: 220px;
+  }
+  #user-profile-form .well {
+    padding-bottom:95px;
+  }
+}
+
+@media (max-width: 480px) {
+  #user-profile-form .controls.checkbox {
+    margin-left: 0;
+  }
+  #user-profile-form .controls.checkbox label.error {
+    margin-top: -14px;
+    margin-left: 4px;
+  }
+  #newsletter {
+    margin: 0 0 0;
+  }
+  #user-profile-form .profile-links {
+    text-align: left;
+    float: none;
+  }
+}
+
+.control-group label.label-error {
+  font-size: 1em;
+  color: #44639A;
+}

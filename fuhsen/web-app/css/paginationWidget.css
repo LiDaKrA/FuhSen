@@ -1,0 +1,109 @@
+.page-nav {
+  float: left;
+}
+
+.page-nav ul {
+  margin-bottom: 0;
+}
+
+.page-nav ul li{
+  padding-left:0;
+}
+
+.page-nav .prev-page a {
+  padding-right: 5px;
+}
+
+.page-nav .next-page a {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.page-nav .pages-overall-index a{
+  padding:5px 10px;
+  display: inline-block;
+}
+
+.page-nav .pages-overall-index a.active{
+  border: #44639A 1px solid;
+  text-decoration: none;
+}
+
+.page-nav .pages-overall-index a.active:hover{
+  text-decoration:none;
+  color: #000;
+}
+
+.page-nav .extra-controls{
+  width: 20px;
+  height: 25px;
+  background: url("../images/icons/arrows.png") no-repeat;
+  background-position: 70% -126px;
+  vertical-align: middle;
+  padding-left:0;
+}
+
+.page-nav .extra-controls .arrow-container{
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  top: -20px;
+  left: 75px;
+}
+
+.page-nav .extra-controls .arrow-up {
+  background: url("../images/icons/tooltip.png") -14px -10px no-repeat;
+  width: 11px;
+  height: 9px;
+  margin-top: 11px;
+  background-color: #fff;
+  margin-left: 14px;
+}
+
+.page-nav .extra-controls .go-to-page{
+  width: 22px;
+  height: 22px;
+  background: url("../images/icons/arrows.png") no-repeat;
+  background-position: 5px -80px;
+  display: inline-block;
+  background-color: #efebe8;
+  vertical-align: middle;
+  margin-left: 5px;
+  background-size: 100%;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.page-nav .extra-controls>div{
+  position: absolute;
+  margin-left: -85px;
+  margin-top: 28px;
+  z-index: 999;
+  background: #fff;
+  padding: 10px;
+  border: #bbb 1px solid;
+  box-shadow: #999 0px 11px 25px -4px;
+  display: none;
+}
+
+.page-nav .extra-controls:hover > div{
+  display:block;
+}
+
+.page-nav .extra-controls ul{
+  list-style-type: none;
+  margin-left: 0;
+}
+
+.page-nav .extra-controls a{
+  display: block;
+}
+
+.page-nav .page-input {
+  width: 60px;
+  text-align:center;
+  margin-bottom:3px;
+  margin-left: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
+}

@@ -1,0 +1,326 @@
+/*
+ * Copyright (C) 2014 FIZ Karlsruhe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.entity-page .link-block {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.entity-page .objects h3 {
+  display: inline-block;
+}
+
+.entity-page .objects .tooltip {
+  margin-left:56px;
+  font-size: 0.813em;
+  width: 30%;
+}
+
+.entity-page .contextual-help {
+  vertical-align: middle;
+  display: inline-block;  
+}
+
+.entity-page .fields{
+  font-size: 1em;
+}
+
+.entity-page .all-objects-link {
+  text-decoration:underline;
+}
+
+.entity-page input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.entity-page .objects-help {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 2px;
+  width: 17px;
+  height: 17px;
+  background: url("../images/icons/tooltips.png") no-repeat 0 -60px;
+}
+
+.entity-page .objects-help:hover,.entity-page  .objects-help:active,
+.entity-page  .objects-help:focus {
+  background-position: 0 -90px;
+  cursor: help;
+}
+
+.entity-page .header-objects {
+  float: right;
+  text-align:right;
+  margin: 10px 0;
+  padding-top: 3px;
+  line-height: 16px;
+}
+
+.entity-page .icon-work {
+  background: url(../images/icons/listArrows.png) no-repeat 0 -1px;
+}
+
+.entity-page .icon-theme {
+  background: url(../images/icons/listArrows.png) no-repeat 0 -1px;
+}
+
+.entity-page .item-title {
+  font-weight:bold;
+}
+
+.entity-page .rolefacet {
+  margin:10px 0px;
+}
+
+.entity-page .search {
+  padding: 0 0 10px 0;
+}
+
+.entity-page .icon-search-entity {
+  background: url(../images/icons/ddbIkonographie.png) no-repeat -30px -209px;
+  width: 16px;
+  height: 16px;
+}
+
+.entity-page .objects, .entity-page .profession-dates {
+  padding-bottom: 20px;  
+}
+
+.entity-page .carousel {
+  padding: 0 0 0 0;
+  position: relative;
+  display: none;
+  margin-bottom: 10px;
+  border: 2px solid #EFEBE8;
+}
+
+.entity-page .preview-item {
+    display: block;
+    float: left;
+    position: relative;
+    max-width: 200px;
+    width: 200px;
+}
+
+.entity-page .preview-item img {
+  text-align: center;
+  max-height: 105px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.entity-page .caption {
+  left:0px;
+  bottom:0px;
+  font-size: 0.875em;
+  height: 36px;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  text-align: center;
+  max-width: 160px;
+  padding: 0.5px 0.5px 0.5px 0.5px;
+}
+
+.caption strong {
+  font-weight: normal;
+}
+
+.preview-item .preview-item-image {
+  height: 105px;
+  padding-bottom: 10px;
+}
+
+.entity-page .media-bar a {
+  text-decoration: underline;
+}
+
+.entity-page a.previous span, a.next span {
+  display: none;
+}
+
+.entity-page .carousel a.previous, .entity-page .carousel a.next {
+  top: 70px;
+}
+
+.entity-page .previous.disabled, .entity-page .next.disabled {
+  cursor: default;
+}
+
+.entity-page .previous.disabled, .entity-page .previous.disabled:hover {
+  background-position: 0 -100px !important;
+}
+
+.entity-page .next.disabled, .entity-page .next.disabled:hover {
+  background-position: 0 -250px !important;
+}
+
+.entity-page .entity-controls {
+  position: absolute;
+  height: 180px;
+  top: 0;
+  background: #efebe8;
+  width: 35px;
+  cursor: pointer;
+}
+
+.entity-page .entity-controls.next {
+  right: 0;
+}
+
+.entity-page .carousel .clearfix {
+  float: none;
+  clear: both;
+}
+
+.entity-page .popup-dialog-wrapper {
+  margin-left: 0 !important;
+}
+
+.entity-page .external-icon {
+  display: inline-block;
+}
+
+.entity-page .external-icon img {
+  margin: 0;
+  padding: 0;
+  width: 16px;
+}
+
+.entity-page .external-link-with-icon, .entity-page .external-link {
+  margin-top: 3px;
+}
+
+.entity-page .external-links ul {
+  margin-top: 15px;
+}
+
+.entity-page .external-dummy-icon {
+  background: url(../images/icons/entity.png) no-repeat 0 0px;  
+  width: 16px;
+  height: 16px;
+}
+
+.entity-page .external-link span {
+  margin: -20px 0 0 20px;
+  display: block;
+  background: none;
+}
+
+.entity-page hr {
+    border-top: 2px solid #EFEBE8;
+}
+
+.entity-page .thumbimage {
+  margin:  15px 0 5px 0;
+}
+
+.entity-page .search_link {
+  text-decoration: underline;
+}
+
+.entity-page .thumbinner {
+  padding-bottom: 10px;
+}
+
+.entity-page .thumbcaption {
+  font-size: 15px;
+}
+
+.entity-page .thumblicense {
+  padding-top: 8px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.entity-page .wiki-link {
+  text-decoration: underline;
+}
+
+.entity-page .object-controls {
+  background-color: white;
+}
+
+.entity-page #idFavorite {
+  margin-right: 30px;
+}
+
+.entity-page .thumb hr {
+  display: none;
+}
+
+.entity-page .favorite-actions.favorite-add {
+  background-position: -6px -67px;
+  cursor: pointer;
+}
+
+.entity-page .favorite-actions.favorite-add:hover {
+  background-position: -6px -97px;
+}
+
+.entity-page .favorite-actions.favorite-selected {
+  background-position: -6px -7px;
+}
+
+.entity-page .favorite-actions.favorite-selected:hover {
+  background-position: -6px -37px;
+}
+
+/* carousel controls responsiveness */
+@media (min-width: 1200px) {
+  .entity-page .carousel a.previous {
+    left: -3px;
+  }
+  .entity-page .carousel a.next {
+    right: -11px;
+  }
+  .entity-page .preview-item {
+    width: 160px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .entity-page .carousel a.previous {
+    left: -3px;
+  }
+  .entity-page .carousel a.next {
+    right: -11px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .entity-page .header-objects {
+    float: left;
+    text-align:left;
+  }
+
+  .entity-page .thumb hr {
+    display: block;
+  }
+
+  .entity-page .object-controls {
+    border-width: 0;
+  }
+
+  .entity-page .page-link-popup-anchor {
+    display: none;
+  }
+}
+/* carousel controls responsiveness - end */

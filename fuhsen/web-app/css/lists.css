@@ -1,0 +1,117 @@
+.lists .lists-menu-item {
+  background-color: #EFEBE8;
+  line-height: 28px;
+  margin: 2px 0;
+  position: relative;
+  border-top: 1px solid #EFEBE8;
+  border-bottom: 1px solid #EFEBE8;
+}
+
+.lists .active {
+  background-color: #fff;
+  position: relative;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.lists .lists-menu-item>a.h3 {
+  background: url("../images/icons/arrows.png") no-repeat scroll 100% -48px rgba(0, 0, 0, 0);
+  display: block;
+  padding: 0 20px 0 10px;
+  z-index: 10;
+}
+
+.lists .lists-menu-select {
+  height: 45px;
+  line-height: 45px;
+  display: block;
+  padding: 0 20px 0 5px;
+  z-index: 10;
+  font-weight: bold;
+}
+
+.lists .lists-paginator-options {
+  height: 45px;
+  line-height: 45px;
+}
+
+.lists .lists-content .results-paginator-view {
+  background: none;
+}
+
+.lists .lists-content .results-paginator-options {
+  height: 40px;
+  line-height: 40px;
+}
+
+.lists .lists-content .item {
+  padding: 15px 0;
+  position: relative;
+}
+
+.lists .lists-content .facets-item:first-child {
+  margin-top: 14px;
+}
+
+.lists .lists-content .summary-main-wrapper .title a {
+  font-weight: normal;
+  word-wrap: break-word;
+}
+
+.lists .lists-content .summary-main-wrapper .title {
+  max-height: 8em;
+}
+
+.lists .lists-content .title {
+  line-height: 1.1em;
+  margin: 0;
+  max-height: 2.2em;
+  overflow: hidden;
+  padding: 4px 10px 0 0;
+}
+
+.lists .lists-content .item-details {
+  padding: 4px 10px 0 0;
+}
+
+.lists .lists-content .item-description {
+  padding: 10px 10px 0 0;
+}
+
+.lists .lists-header {
+  border-bottom: solid 2px #efebe8;
+}
+
+.lists .span12>div {
+  display: inline-block;
+}
+
+.lists .right-container {
+  line-height: 62px;
+  float: right;
+}
+
+.lists .socialmedia {
+  padding-top:12px;
+}
+
+.lists .page-link:before {
+  margin-top: 22px;
+}
+
+.lists .popup-dialog-title .page-link:before {
+  margin-top: 5px;
+}
+
+.lists .summary img {
+  max-width: 140px;
+  max-height: 105px;
+  display: block;
+  float: none;
+  border: 0;
+  margin: auto;
+}
+
+.lists .popup-dialog-wrapper {
+  margin-top: -48px !important;
+}

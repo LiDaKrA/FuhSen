@@ -1,0 +1,8 @@
+Placeholder file.
+
+It only exists so that GIT does not automatically deletes the containing folder, 
+which is a required Grails-Folder. If this file is removed the folder will
+disappear from GIT leading to build path errors in Eclipse.
+
+You can safely delete this file if the folder contains other files like controllers
+or services or similar. 

@@ -419,7 +419,7 @@ class SearchService {
             urlQuery[SearchParamEnum.QUERY.getName()] = "*"
         }
 
-		urlQuery[SearchParamEnum.NUMBER_RESULTS.getName()] = 50.toInteger()
+		urlQuery[SearchParamEnum.NUMBER_RESULTS.getName()] = 10.toInteger()
 		reqParameters[SearchParamEnum.NUMBER_RESULTS.getName()] = urlQuery[SearchParamEnum.NUMBER_RESULTS.getName()]
 		
 //		//VWPATENT-29 - Scroll Funktion

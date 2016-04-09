@@ -27,7 +27,18 @@ limitations under the License.
   	<g:if test="${item.dataSource == 'GOOGLE+'}">
   		<img src="${resource(dir: 'images', file: 'datasources/googleplus.png')}" alt="Information from Google+" height="45" width="45"/>
   	</g:if>
-  	
+  	<g:if test="${item.dataSource == 'TWITTER'}">
+  		<img src="${resource(dir: 'images', file: 'datasources/twitter.png')}" alt="Information from Twitter" height="45" width="45"/>
+  	</g:if>
+  	<g:if test="${item.dataSource == 'AMAZON'}">
+  		<img src="${resource(dir: 'images', file: 'datasources/amazon.png')}" alt="Information from Amazon" height="45" width="45"/>
+  	</g:if>
+  	<g:if test="${item.dataSource == 'FACEBOOK'}">
+  		<img src="${resource(dir: 'images', file: 'datasources/facebook.png')}" alt="Information from Facebok" height="45" width="45"/>
+  	</g:if>
+  	<g:if test="${item.dataSource == 'GKB'}">
+  		<img src="${resource(dir: 'images', file: 'datasources/gkb.png')}" alt="Information from Google Knowledge Graph" height="45" width="45"/>
+  	</g:if>
   	<%-- 
     <img src="${ item.image }" alt="<match>${ item.title }</match>" height="60" width="60"/>
     --%>

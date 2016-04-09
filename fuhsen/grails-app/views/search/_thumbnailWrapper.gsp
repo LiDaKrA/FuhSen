@@ -20,7 +20,13 @@ limitations under the License.
 <%-- the thumpnailWrapper is just used for the info-icon --%>
   
   <div class="thumbnail">
-    <img src="${ item.image }" alt="<match>${ item.title }</match>" height="60" width="60"/>
+    <g:if test="${item.image == ''}">
+    	<img src="${resource(dir: 'images', file: 'datasources/unknown.png')}" alt="No picture" height="60" width="60"/>    	
+	</g:if>
+	<g:else>
+    	<img src="${ item.image }" alt="<match>${ item.title }</match>" height="60" width="60"/>
+    </g:else>
+    
   </div>
 
 </div>

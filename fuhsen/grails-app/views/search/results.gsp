@@ -169,7 +169,7 @@ limitations under the License.
             
             	<%-- Scroll Funktion --%>
             	<input type="hidden" name="numberOfResultsH" value="${numberOfResultsFormatted}">
-              	<input type="hidden" name="rowH" value="20">
+              	<input type="hidden" name="rowH" value="200">
               	<input type="hidden" name="offsetH" value="0">
               	<input type="hidden" name="isLoadingInformation" value="false">
               	
@@ -181,7 +181,7 @@ limitations under the License.
               	</div>
               	
               	<%-- Message to load more information --%>
-            	<div id="loading" class="loading ${(results.numberOfResults <= 20)?'hidden':'' }">
+            	<div id="loading" class="loading ${(results.numberOfResults <= 200)?'hidden':'' }">
             		<a id="load_more_results"><g:message encodeAs="html" code="ddbnext.SearchResults_LoadMore" /></a>	        		
             	</div>
               	

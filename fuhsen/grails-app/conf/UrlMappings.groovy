@@ -365,6 +365,11 @@ class UrlMappings {
 			controller="pep"
 			action="index"
 		}
+		
+		"/ldw/twitter/$q?" {
+			controller="twitter"
+			action="index"
+		}
 
 		"/loadingresults/$q?" {
 			controller="search"

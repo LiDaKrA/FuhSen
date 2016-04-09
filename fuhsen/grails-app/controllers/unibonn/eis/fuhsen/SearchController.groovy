@@ -66,7 +66,8 @@ class SearchController {
 			subFacetsUrl = searchService.buildSubFacetsUrl(params, selectedFacets, mainFacetsUrl, urlQuery, request)
 		}
 		
-		Model model = session["Model"]
+		def models = [:]
+		models = session["Models"]
 		//Printing to load in a triplet store and make tests
 		//model.write(System.out, "TTL")
 		
@@ -106,7 +107,7 @@ class SearchController {
 		}
 		else {
 		
-			def (Object resultsItems, int resultsSize) = parsePersonsToJson(model)
+			def (Object resultsItems, int resultsSize) = parsePersonsToJson(models)
 			//log.info("results in JSON: "+resultsItems)
 				
 			def emptyString = ""
@@ -279,17 +280,18 @@ class SearchController {
 			def resultsItems = new JsonSlurper().parseText(inputFile)
 			
 			SearchEngine se = new SearchEngine()
-			Model resultsRdf = se.getResults("", urlQuery)
+			def models = [:]
+			models = se.getResults("", urlQuery)
 			
 			//Generating a Unique UID for the search query
 			UUID searchUID = UUID.randomUUID()
 			log.info("Search UID: "+searchUID)
 			
-			if (session["Model"] == null)
-				session["Model"] = resultsRdf
+			if (session["Models"] == null)
+				session["Models"] = models
 			else {
 				log.info('Model is in session already - replacing results')
-				session["Model"] = resultsRdf
+				session["Models"] = models
 			}
 			
 			def jsonReturn = [ responseCode: 'Ok']
@@ -302,11 +304,16 @@ class SearchController {
 		}				
 	}
 	
-	private parsePersonsToJson(Model model) {
+	private parsePersonsToJson(def models) {
+		
+		Model model = models["gplus"]
 		
 		def resultList = [:]
         def docs = []
 		
+		//--------------------------------------------------------------------
+		//(1) Google Plus results
+		//--------------------------------------------------------------------
 		String query = ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
 				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 				+ "	PREFIX type: <http://dbpedia.org/class/yago/> "
@@ -330,7 +337,7 @@ class SearchController {
 				+ "			  ?organization fuhsen:organizationprimary 'true' . "
 				+ "			  ?organization fuhsen:organizationtype 'work' . "
 				+ "			  ?organization fuhsen:organizationname ?currentWork . } . "
-				+ "} limit 500")
+				+ "} limit 100")
 		
 		QueryExecution qexec = QueryExecutionFactory.create(query, model)
 		ResultSet results = qexec.execSelect()
@@ -349,7 +356,7 @@ class SearchController {
 				tmpResult["id"] = row.get("person").toString()
 				
 				tmpResult["title"] = row.getLiteral("name").getString()					
-	            String[] excerpts = prepareExcerptForPerson(row)
+	            String[] excerpts = prepareExcerptForPerson(row, "gplus")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1]
 	            tmpResult["image"] = row.getLiteral("depiction").toString()
@@ -360,10 +367,149 @@ class SearchController {
 			}
 		}
 		
-		resultList["numberOfResults"] = aSize
+		//--------------------------------------------------------------------
+		//(2) Twiter results
+		//--------------------------------------------------------------------
+		Model modelTwitter = models["twitter"]
+		String queryTwitter = ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "	PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+				+ "	PREFIX fs: <http://vocab.cs.uni-bonn.de/fuhsen#> "
+				+ "SELECT ?person ?name ?image ?alias ?lang ?location ?url WHERE { "
+				+ "?person foaf:name ?name . "
+				+ "?person foaf:img ?image . "				
+				+ "OPTIONAL { ?person fs:alias ?alias } . "
+				+ "OPTIONAL { ?person fs:lang ?lang } . "
+				+ "OPTIONAL { ?person fs:location ?location } . "
+				+ "OPTIONAL { ?person fs:url ?url } . "
+				+ "} limit 100")
+		
+		QueryExecution qexecTwitter = QueryExecutionFactory.create(queryTwitter, modelTwitter)
+		ResultSet resultsTwitter = qexecTwitter.execSelect()
+		
+		int aSizeTwitter = 0
+		
+		while(resultsTwitter.hasNext()) {
+			
+			QuerySolution row = resultsTwitter.next();
+			
+			def tmpResult = [:]
+			
+			//TODO remove this condition is temporal due to problems in JSON translation
+			if (row.get("name").literal)
+			{
+				tmpResult["id"] = row.get("person").toString()
+				
+				tmpResult["title"] = row.getLiteral("name").getString()
+				String[] excerpts = prepareExcerptForPerson(row, "twitter")
+				tmpResult["excerpt"] = excerpts[0]
+				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["image"] = row.getResource("image").toString()
+				tmpResult["dataSource"] = "TWITTER"
+			   
+				docs.add(tmpResult)
+				aSizeTwitter = aSizeTwitter + 1
+			}
+		}
+		
+		//--------------------------------------------------------------------
+		//(3) Google Knowledge Graph results
+		//--------------------------------------------------------------------
+		Model modelGkb = models["gkb"]
+		String queryGkb = ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "	PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+				+ "	PREFIX fs: <http://vocab.cs.uni-bonn.de/fuhsen#> "
+				+ "SELECT ?person ?name ?label ?comment ?url WHERE { "
+				+ "?person foaf:name ?name . "
+				//+ "?person foaf:img ?image . "
+				+ "OPTIONAL { ?person rdfs:label ?label } . "
+				+ "OPTIONAL { ?person rdfs:comment ?comment } . "
+				+ "OPTIONAL { ?person fs:url ?url } . "
+				+ "} limit 100")
+		
+		QueryExecution qexecGkb = QueryExecutionFactory.create(queryGkb, modelGkb)
+		ResultSet resultsGkb = qexecGkb.execSelect()
+		
+		int aSizeGkb = 0
+		
+		while(resultsGkb.hasNext()) {
+			
+			QuerySolution row = resultsGkb.next();
+			
+			def tmpResult = [:]
+			
+			//TODO remove this condition is temporal due to problems in JSON translation
+			if (row.get("name").literal)
+			{
+				tmpResult["id"] = row.get("person").toString()
+				
+				tmpResult["title"] = row.getLiteral("name").getString()
+				String[] excerpts = prepareExcerptForPerson(row, "gkb")
+				tmpResult["excerpt"] = excerpts[0]
+				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["image"] = ""//row.getResource("image").toString()
+				tmpResult["dataSource"] = "GKB"
+			   
+				docs.add(tmpResult)
+				aSizeGkb = aSizeGkb + 1
+			}
+		}
+		
+		//--------------------------------------------------------------------
+		//(4) Facebook results
+		//--------------------------------------------------------------------
+		Model modelFacebook = models["facebook"]
+		String queryFacebook = ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "	PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+				+ "	PREFIX fs: <http://vocab.cs.uni-bonn.de/fuhsen#> "
+				+ "SELECT ?person ?name ?familyName ?givenName ?image ?url WHERE { "
+				+ "?person foaf:name ?name . "
+				+ "?person foaf:img ?image . "
+				+ "OPTIONAL { ?person foaf:family_name ?familyName } . "
+				+ "OPTIONAL { ?person foaf:givenname ?givenName } . "
+				+ "OPTIONAL { ?person fs:url ?url } . "
+				+ "} limit 100")
+		
+		QueryExecution qexecFacebook = QueryExecutionFactory.create(queryFacebook, modelFacebook)
+		ResultSet resultsFacebook = qexecFacebook.execSelect()
+		
+		int aSizeFacebook = 0
+		
+		while(resultsFacebook.hasNext()) {
+			
+			QuerySolution row = resultsFacebook.next();
+			
+			def tmpResult = [:]
+			
+			//TODO remove this condition is temporal due to problems in JSON translation
+			if (row.get("name").literal)
+			{
+				tmpResult["id"] = row.get("person").toString()
+				
+				tmpResult["title"] = row.getLiteral("name").getString()
+				//String[] excerpts = prepareExcerptForPerson(row, "facebook")				
+				tmpResult["excerpt"] = "Url: "+row.getResource("url").toString()//excerpts[0]
+				tmpResult["excerpt1"] = ""//excerpts[1]
+				tmpResult["image"] = row.getResource("image").toString()
+				tmpResult["dataSource"] = "FACEBOOK"
+			   
+				docs.add(tmpResult)
+				aSizeFacebook = aSizeFacebook + 1
+			}
+		}
+		
+		log.info("Size gplus: "+aSize)
+		log.info("Size twitter: "+aSizeTwitter)
+		log.info("Size gkb: "+aSizeGkb)
+		log.info("Size facebook: "+aSizeFacebook)
+		int totalResults = aSize + aSizeTwitter + aSizeGkb + aSizeFacebook
+		
+		resultList["numberOfResults"] = totalResults
 		resultList["results"] = docs
 		
-		return [resultList, aSize]		
+		return [resultList, totalResults]		
 	}
 	
 	private parseOrganizationsToJson(Model model) {
@@ -459,35 +605,113 @@ class SearchController {
 		return results
 	}
 	
-	private def prepareExcerptForPerson(QuerySolution row) {
+	private def prepareExcerptForPerson(QuerySolution row, String source) {
 		
 		String[] results = new String[2]
 		
-		String excerpt = ""
+		//--------------------------------------------------------------------
+		//(1) Google Plus results
+		//--------------------------------------------------------------------
+		if (source == "gplus")
+		{
+			String excerpt = ""
+			
+			if (row.getLiteral("gender") != null)
+				excerpt = "Gender: "+row.getLiteral("gender").toString()
+			if (row.getLiteral("birthday") != null){
+				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt += "Birthday: "+row.getLiteral("birthday").toString()
+			}
+			if (row.getLiteral("occupation") != null){
+				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt += "Occupation: "+row.getLiteral("occupation").toString()
+			}
+			
+			results[0] = excerpt
+			
+			//New line
+			String excerpt1 = ""
+			if (row.getLiteral("currentAddress") != null){
+				excerpt1 += "Address: "+row.getLiteral("currentAddress").toString()
+			}
+			if (row.getLiteral("currentWork") != null){
+				excerpt1 += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt1 += "Work: "+row.getLiteral("currentWork").toString()
+			}
+			results[1] = excerpt1
+		}
 		
-		if (row.getLiteral("gender") != null)
-			excerpt = "Gender: "+row.getLiteral("gender").toString()
-		if (row.getLiteral("birthday") != null){
-			excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-			excerpt += "Birthday: "+row.getLiteral("birthday").toString()
-		}
-		if (row.getLiteral("occupation") != null){
-			excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-			excerpt += "Occupation: "+row.getLiteral("occupation").toString()
+		//--------------------------------------------------------------------
+		//(2) Twitter results
+		//--------------------------------------------------------------------
+		if (source == "twitter")
+		{
+			String excerpt = ""
+			
+			if (row.getLiteral("alias") != null)
+				excerpt = "Alias: "+row.getLiteral("alias").toString()
+			if (row.getLiteral("location") != null){
+				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt += "Location: "+row.getLiteral("location").toString()
+			}			
+			
+			results[0] = excerpt
+			
+			//New line
+			String excerpt1 = ""
+			if (row.getResource("url") != null){
+				excerpt1 += "Url: "+row.getResource("url").toString()
+			}
+			results[1] = excerpt1
 		}
 		
-		results[0] = excerpt
+		//--------------------------------------------------------------------
+		//(3) Google Knowledge Graph results
+		//--------------------------------------------------------------------
+		if (source == "gkb")
+		{
+			String excerpt = ""
+			
+			if (row.getLiteral("label") != null)
+				excerpt = "Label: "+row.getLiteral("label").toString()
+			if (row.getLiteral("comment") != null){
+				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt += "Description: "+row.getLiteral("comment").toString()
+			}
+			
+			results[0] = excerpt
+			
+			//New line
+			String excerpt1 = ""
+			if (row.getResource("url") != null){
+				excerpt1 += "Url: "+row.getResource("url").toString()
+			}
+			results[1] = excerpt1
+		}
 		
-		//New line
-		String excerpt1 = ""
-		if (row.getLiteral("currentAddress") != null){
-			excerpt1 += "Address: "+row.getLiteral("currentAddress").toString()
+		//--------------------------------------------------------------------
+		//(4) Facebook results
+		//--------------------------------------------------------------------
+		if (source == "facebook")
+		{
+			String excerpt = ""
+			
+			if (row.getLiteral("label") != null)
+				excerpt = "Label: "+row.getLiteral("label").toString()
+			if (row.getLiteral("comment") != null){
+				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
+				excerpt += "Description: "+row.getLiteral("comment").toString()
+			}
+			
+			results[0] = excerpt
+			
+			//New line
+			String excerpt1 = ""
+			if (row.getResource("url") != null){
+				excerpt1 += "Url: "+row.getResource("url").toString()
+			}
+			results[1] = excerpt1
 		}
-		if (row.getLiteral("currentWork") != null){
-			excerpt1 += "&nbsp;&nbsp;&nbsp;&nbsp;"
-			excerpt1 += "Work: "+row.getLiteral("currentWork").toString()
-		}
-		results[1] = excerpt1
 		
 		return results
 		

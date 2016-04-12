@@ -25,38 +25,67 @@ class FacetsController {
 		
 		String query = ""
 		
+		def isProduct = false
+		def isPerson = false
+		def isOrgnization = false
+		
 		//Products facets
 		if (facetName == "product_condition_fct") {
 			query = getProductConditionFacetQuery()
+			isProduct = true
 		}
 		if (facetName == "product_price_fct") {
 			query = getProductPriceFacetQuery()
+			isProduct = true
 		}
 		if (facetName == "product_country_fct") {
 			query = getProductCountryFacetQuery()
+			isProduct = true
 		}
 		
 		//Person facets
 		if (facetName == "person_gender_fct") {
 			query = getPersonGenderFacetQuery()
+			isPerson = true
 		}
 		if (facetName == "person_birthday_fct") {
 			query = getPersonBirthdayFacetQuery()
+			isPerson = true
 		}
 		if (facetName == "person_occupation_fct") {
 			query = getPersonOccupationFacetQuery()
+			isPerson = true
 		}
 		if (facetName == "person_livesat_fct") {
 			query = getPersonLivesAtFacetQuery()
+			isPerson = true
 		}
 		if (facetName == "person_worksat_fct") {
 			query = getPersonWorksAtFacetQuery()
+			isPerson = true
 		}
 		if (facetName == "person_studiesat_fct") {
 			query = getPersonStudiesAtFacetQuery()
+			isPerson = true
 		}
 		
-		Model model = session["Model"]
+		def models = [:]
+		models = session["Models"]
+		Model model = null
+		
+		//Getting the model for the facets
+		if (isPerson)
+		{
+			if (facetName == "person_location_fct")
+				model = models["twitter"]
+			else
+				model = models["gplus"]
+		}
+		if (isProduct)
+		{
+			model = models["ebay"]
+		}
+		
 		//Printing to load in a triplet store and make tests
 		//model.write(System.out, "TTL")
 		

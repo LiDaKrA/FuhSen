@@ -77,7 +77,7 @@ class SearchController {
 			//log.info("Facets: "+facetsValues)
 			
 			log.info("Entity Summarization Starts: "+System.currentTimeMillis())
-			def (Object filteredResultsItems, int resultsSize) = parseFacetedPersonsToJson(model, facetsValues)
+			def (Object filteredResultsItems, int resultsSize) = parseFacetedPersonsToJson(models, facetsValues)
 			log.info("Entity Summarization Ends: "+System.currentTimeMillis())
 			
 			def resultsHTML = ""
@@ -154,7 +154,8 @@ class SearchController {
 		}
 		
 		//The session variable "Model" contains all the results found in fuhsen search 
-		Model model = session["Model"]
+		def models = [:]
+		models = session["Models"]
 		//model.write(System.out, "TTL")
 		
 		if(params.reqType=="ajax"){
@@ -162,7 +163,7 @@ class SearchController {
 			def facetsValues = searchService.facetValuesRequestParameterToList(params)
 			//log.info("Facets: "+facetsValues)
 			
-			def (Object filteredResultsItems, int resultsSize) = parseFacetedProductsToJson(model, facetsValues)
+			def (Object filteredResultsItems, int resultsSize) = parseFacetedProductsToJson(models, facetsValues)
 			
 			def resultsHTML = ""
 			if (params.infiniteScroll=="true") {
@@ -191,7 +192,7 @@ class SearchController {
 		}
 		else {
 			
-			def (Object resultsItems, int resultsSize) = parseProductsToJson(model)
+			def (Object resultsItems, int resultsSize) = parseProductsToJson(models)
 			//log.info("results in JSON: "+resultsItems)
 			def emptyString = ""
 			
@@ -420,9 +421,9 @@ class SearchController {
 				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 				+ "	PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
 				+ "	PREFIX fs: <http://vocab.cs.uni-bonn.de/fuhsen#> "
-				+ "SELECT ?person ?name ?label ?comment ?url WHERE { "
+				+ "SELECT ?person ?name ?label ?comment ?url ?image WHERE { "
 				+ "?person foaf:name ?name . "
-				//+ "?person foaf:img ?image . "
+				+ "OPTIONAL { ?person foaf:img ?image } . "
 				+ "OPTIONAL { ?person rdfs:label ?label } . "
 				+ "OPTIONAL { ?person rdfs:comment ?comment } . "
 				+ "OPTIONAL { ?person fs:url ?url } . "
@@ -448,7 +449,10 @@ class SearchController {
 				String[] excerpts = prepareExcerptForPerson(row, "gkb")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1]
-				tmpResult["image"] = ""//row.getResource("image").toString()
+				if (row.getResource("image") != null)
+					tmpResult["image"] = row.getResource("image").toString()
+				else
+					tmpResult["image"] = ""
 				tmpResult["dataSource"] = "GKB"
 			   
 				docs.add(tmpResult)
@@ -526,7 +530,9 @@ class SearchController {
 	}
 	
 	
-	private parseProductsToJson(Model model) {
+	private parseProductsToJson(def models) {
+		
+		Model model = models["ebay"]
 			
 		def resultList = [:]
 		def docs = []
@@ -718,7 +724,9 @@ class SearchController {
 	}
 	
 	//Methods to apply Facets on the results
-	private parseFacetedProductsToJson(Model model, def facetsValues) {
+	private parseFacetedProductsToJson(def models, def facetsValues) {
+		
+		Model model = models["ebay"]
 		
 		def resultList = [:]
 		def docs = []
@@ -790,7 +798,9 @@ class SearchController {
 		return [resultList, aSize]
 	}
 	
-	private parseFacetedPersonsToJson(Model model, def facetsValues) {
+	private parseFacetedPersonsToJson(def models, def facetsValues) {
+		
+		Model model = models["gplus"]
 		
 		def resultList = [:]
 		def docs = []
@@ -876,7 +886,7 @@ class SearchController {
 				tmpResult["id"] = row.get("person").toString()
 				
 				tmpResult["title"] = row.getLiteral("name").getString()					
-	            String[] excerpts = prepareExcerptForPerson(row)
+	            String[] excerpts = prepareExcerptForPerson(row, "gplus")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1] 
 	            tmpResult["image"] = row.getLiteral("depiction").toString()	

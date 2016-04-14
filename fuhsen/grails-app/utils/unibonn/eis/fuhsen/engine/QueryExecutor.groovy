@@ -183,7 +183,38 @@ class QueryExecutor {
 		} catch(Exception) {
 			log.error("Something when wrong in facebook search...")
 		}
+
+		//http://localhost:9000/ldw/v1/restApiWrapper/id/gplus/search?query=Auer
+		//--------------------------------------------------------------------
+		//(7) Searching in Google Plus for Organizations
+		//--------------------------------------------------------------------
 		
+		try
+		{
+			log.info "Searching in Google Plus for Organizations"
+			
+			def apiResponseGplus = ApiConsumer.getJson('http://localhost:9000' ,'ldw/v1/restApiWrapper/id/gplus/search', false, urlQuery2)
+			if(!apiResponseGplus.isOk()){
+				log.error "Json: Json file was not found"
+				apiResponseGplus.throwException(null)
+			}
+				
+			def resultsItemsRdfGplus = apiResponseGplus.getResponse()
+				
+			Model resultsGplus = ModelFactory.createDefaultModel()
+			String modelTextGplus = resultsItemsRdfGplus.toString()
+				
+			//log.info("RDF: "+modelTextTwitter)
+				
+			resultsGplus.read(new ByteArrayInputStream(modelTextGplus.getBytes("UTF-8")), null, "JSON-LD")
+				
+			//model.add(resultsGkb)
+			models.put("gpluso", resultsGplus)
+			
+		} catch(Exception) {
+			log.error("Something when wrong in facebook search...")
+		}
+				
 		//return model
 		return models
 	}

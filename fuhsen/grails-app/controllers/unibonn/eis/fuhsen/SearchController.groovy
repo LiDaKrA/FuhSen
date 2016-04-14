@@ -67,6 +67,10 @@ class SearchController {
 		}
 		
 		def models = [:]
+		
+		String keyword = session["keyword"]
+		log.info("Search Query: "+keyword)
+		
 		models = session["Models"]
 		//Printing to load in a triplet store and make tests
 		//model.write(System.out, "TTL")
@@ -77,7 +81,7 @@ class SearchController {
 			//log.info("Facets: "+facetsValues)
 			
 			log.info("Entity Summarization Starts: "+System.currentTimeMillis())
-			def (Object filteredResultsItems, int resultsSize) = parseFacetedPersonsToJson(models, facetsValues)
+			def (Object filteredResultsItems, int resultsSize) = parseFacetedPersonsToJson(models, facetsValues, keyword)
 			log.info("Entity Summarization Ends: "+System.currentTimeMillis())
 			
 			def resultsHTML = ""
@@ -107,7 +111,7 @@ class SearchController {
 		}
 		else {
 		
-			def (Object resultsItems, int resultsSize) = parsePersonsToJson(models)
+			def (Object resultsItems, int resultsSize) = parsePersonsToJson(models, keyword)
 			//log.info("results in JSON: "+resultsItems)
 				
 			def emptyString = ""
@@ -224,10 +228,14 @@ class SearchController {
 		def cookieParametersMap = searchService.getSearchCookieAsMap(request, request.cookies)
 		def urlQuery = searchService.convertQueryParametersToSearchParameters(params, cookieParametersMap)
 		
-		Model model = session["Model"]
+		String keyword = session["keyword"]
+		log.info("Search Query: "+keyword)
+		//The session variable "Model" contains all the results found in fuhsen search 
+		def models = [:]
+		models = session["Models"]
 		//model.write(System.out, "TTL")
 		
-		def (Object resultsItems, int resultsSize) = parseOrganizationsToJson(model)
+		def (Object resultsItems, int resultsSize) = parseOrganizationsToJson(models, keyword)
 		//log.info("results in JSON: "+resultsItems)
 		
 		//The list of the NON JS supported facets for items
@@ -288,6 +296,8 @@ class SearchController {
 			UUID searchUID = UUID.randomUUID()
 			log.info("Search UID: "+searchUID)
 			
+			session["keyword"] = params[SearchParamEnum.QUERY.getName()]
+			log.info("Keyword: "+session["keyword"])
 			if (session["Models"] == null)
 				session["Models"] = models
 			else {
@@ -305,7 +315,7 @@ class SearchController {
 		}				
 	}
 	
-	private parsePersonsToJson(def models) {
+	private parsePersonsToJson(def models, String keyword) {
 		
 		Model model = models["gplus"]
 		
@@ -360,9 +370,19 @@ class SearchController {
 	            String[] excerpts = prepareExcerptForPerson(row, "gplus")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["excerpt2"] = excerpts[2]
+				tmpResult["excerpt3"] = excerpts[3]
+				tmpResult["excerpt4"] = excerpts[4]
 	            tmpResult["image"] = row.getLiteral("depiction").toString()
 				tmpResult["dataSource"] = "GOOGLE+"
+				tmpResult["url"] = ""
 	           
+				//Rank improvement
+				if (row.getLiteral("name").getString().contains(keyword))
+					tmpResult["rank"] = 2
+				else
+					tmpResult["rank"] = 5
+					
 				docs.add(tmpResult)
 				aSize = aSize + 1
 			}
@@ -405,9 +425,23 @@ class SearchController {
 				String[] excerpts = prepareExcerptForPerson(row, "twitter")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["excerpt2"] = excerpts[2]
+				tmpResult["excerpt3"] = excerpts[3]
+				tmpResult["excerpt4"] = excerpts[4]
 				tmpResult["image"] = row.getResource("image").toString()
 				tmpResult["dataSource"] = "TWITTER"
 			   
+				if (row.getResource("url") != null)
+					tmpResult["url"] = row.getResource("url").toString()
+				else
+					tmpResult["url"] = ""
+				
+				//Rank improvement
+				if (row.getLiteral("name").getString().toLowerCase().contains(keyword.toLowerCase()))
+					tmpResult["rank"] = 2
+				else
+					tmpResult["rank"] = 6
+				
 				docs.add(tmpResult)
 				aSizeTwitter = aSizeTwitter + 1
 			}
@@ -449,12 +483,26 @@ class SearchController {
 				String[] excerpts = prepareExcerptForPerson(row, "gkb")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["excerpt2"] = excerpts[2]
+				tmpResult["excerpt3"] = excerpts[3]
+				tmpResult["excerpt4"] = excerpts[4]
 				if (row.getResource("image") != null)
 					tmpResult["image"] = row.getResource("image").toString()
 				else
 					tmpResult["image"] = ""
 				tmpResult["dataSource"] = "GKB"
 			   
+				if (row.getResource("url") != null)
+					tmpResult["url"] = row.getResource("url").toString()
+				else
+					tmpResult["url"] = ""
+				
+				//Rank improvement
+				if (row.getLiteral("name").getString().toLowerCase().contains(keyword.toLowerCase()))
+					tmpResult["rank"] = 1
+				else
+					tmpResult["rank"] = 7
+				
 				docs.add(tmpResult)
 				aSizeGkb = aSizeGkb + 1
 			}
@@ -494,11 +542,25 @@ class SearchController {
 				
 				tmpResult["title"] = row.getLiteral("name").getString()
 				//String[] excerpts = prepareExcerptForPerson(row, "facebook")				
-				tmpResult["excerpt"] = "Url: "+row.getResource("url").toString()//excerpts[0]
-				tmpResult["excerpt1"] = ""//excerpts[1]
+				tmpResult["excerpt"] = ""
+				tmpResult["excerpt1"] = ""
+				tmpResult["excerpt2"] = ""
+				tmpResult["excerpt3"] = ""
+				tmpResult["excerpt4"] = ""
 				tmpResult["image"] = row.getResource("image").toString()
 				tmpResult["dataSource"] = "FACEBOOK"
 			   
+				if (row.getResource("url") != null)
+					tmpResult["url"] = row.getResource("url").toString()
+				else
+					tmpResult["url"] = ""
+				
+				//Rank improvement
+				if (row.getLiteral("name").getString().toLowerCase().contains(keyword.toLowerCase()))
+					tmpResult["rank"] = 2
+				else
+					tmpResult["rank"] = 5
+				
 				docs.add(tmpResult)
 				aSizeFacebook = aSizeFacebook + 1
 			}
@@ -508,6 +570,9 @@ class SearchController {
 		log.info("Size twitter: "+aSizeTwitter)
 		log.info("Size gkb: "+aSizeGkb)
 		log.info("Size facebook: "+aSizeFacebook)
+		
+		docs.sort{it.rank}
+		
 		int totalResults = aSize + aSizeTwitter + aSizeGkb + aSizeFacebook
 		
 		resultList["numberOfResults"] = totalResults
@@ -516,13 +581,72 @@ class SearchController {
 		return [resultList, totalResults]		
 	}
 	
-	private parseOrganizationsToJson(Model model) {
+	private parseOrganizationsToJson(def models, String keyword) {
+		
+		Model model = models["gpluso"]
 		
 		def resultList = [:]
 		def docs = []
 		
+		String query = ("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+				+ "	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "	PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+				+ "	PREFIX fs: <http://vocab.cs.uni-bonn.de/fuhsen#> "
+				+ "SELECT ?org ?name ?label ?comment ?url ?image WHERE { "
+				+ "?org foaf:name ?name . "
+				+ "OPTIONAL { ?org foaf:img ?image } . "
+				+ "OPTIONAL { ?org rdfs:label ?label } . "
+				+ "OPTIONAL { ?org rdfs:comment ?comment } . "
+				+ "OPTIONAL { ?org fs:url ?url } . "
+				+ "} limit 100")
+		
+		QueryExecution qexec = QueryExecutionFactory.create(query, model)
+		ResultSet results = qexec.execSelect()
+		
 		int aSize = 0
+		
+		while(results.hasNext()) {
 			
+			QuerySolution row = results.next();
+			
+			def tmpResult = [:]
+			
+			//TODO remove this condition is temporal due to problems in JSON translation
+			if (row.get("name").literal)
+			{
+				tmpResult["id"] = row.get("org").toString()
+				
+				tmpResult["title"] = row.getLiteral("name").getString()
+				String[] excerpts = prepareExcerptForOrganization(row)
+				tmpResult["excerpt"] = excerpts[0]
+				tmpResult["excerpt1"] = excerpts[1]
+				tmpResult["excerpt2"] = excerpts[2]
+				tmpResult["excerpt3"] = excerpts[3]
+				tmpResult["excerpt4"] = excerpts[4]
+				
+				if (row.getResource("image") != null)
+					tmpResult["image"] = row.getResource("image").toString()
+				else
+					tmpResult["image"] = ""
+					
+				tmpResult["dataSource"] = "GOOGLE+"
+			   
+				if (row.getResource("url") != null)
+					tmpResult["url"] = row.getResource("url").toString()
+				else
+					tmpResult["url"] = ""
+				
+				//Rank improvement
+				if (row.getLiteral("name").getString().toLowerCase().contains(keyword.toLowerCase()))
+					tmpResult["rank"] = 1
+				else
+					tmpResult["rank"] = 7
+				
+				docs.add(tmpResult)
+				aSize = aSize + 1
+			}
+		}
+		
 		resultList["numberOfResults"] = aSize
 		resultList["results"] = docs
 		
@@ -570,8 +694,12 @@ class SearchController {
 			String[] excerpts = prepareExcerptForProduct(row)
 			tmpResult["excerpt"] = excerpts[0]
 			tmpResult["excerpt1"] = excerpts[1]
+			tmpResult["excerpt2"] = excerpts[2]
+			tmpResult["excerpt3"] = excerpts[3]
+			tmpResult["excerpt4"] = excerpts[4]
 			tmpResult["image"] = row.getLiteral("depiction").toString()
 			tmpResult["dataSource"] = "EBAY"
+			tmpResult["url"] = ""
 			
 			docs.add(tmpResult)
 			aSize = aSize + 1
@@ -585,114 +713,81 @@ class SearchController {
 	
 	private def prepareExcerptForProduct(QuerySolution row) {
 		
-		String[] results = new String[2]
+		String[] results = new String[5]
 		
-		String excerpt = ""
+		results[0] = ""
+		results[1] = ""
+		results[2] = ""
+		results[3] = ""
+		results[4] = ""
+		
 		if (row.getLiteral("location") != null)
-			excerpt = "Location: "+row.getLiteral("location").toString()
-		if (row.getLiteral("country") != null){
-			excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-			excerpt += "Country: "+row.getLiteral("country").toString()
-		}
+			results[0] = "Location: "+row.getLiteral("location").toString()
+
+		if (row.getLiteral("country") != null)
+			results[1] = "Country: "+row.getLiteral("country").toString()
 		
-		results[0] = excerpt
+		if (row.getLiteral("price") != null)
+			results[2] = "Price: "+row.getLiteral("price").toString()
 		
-		//New line
-		String excerpt1 = ""
-		if (row.getLiteral("price") != null){
-			excerpt1 += "Price: "+row.getLiteral("price").toString()
-		}
-		if (row.getLiteral("condition") != null){
-			excerpt1 += "&nbsp;&nbsp;&nbsp;&nbsp;"
-			excerpt1 += "Condition: "+row.getLiteral("condition").toString()
-		}
-		results[1] = excerpt1
-		
+		if (row.getLiteral("condition") != null)
+			results[3] =  "Condition: "+row.getLiteral("condition").toString()
+			
 		return results
 	}
 	
 	private def prepareExcerptForPerson(QuerySolution row, String source) {
 		
-		String[] results = new String[2]
+		String[] results = new String[5]
+		
+		results[0] = ""
+		results[1] = ""
+		results[2] = ""
+		results[3] = ""
+		results[4] = ""
 		
 		//--------------------------------------------------------------------
 		//(1) Google Plus results
 		//--------------------------------------------------------------------
 		if (source == "gplus")
 		{
-			String excerpt = ""
+			if (row.getLiteral("currentAddress") != null)
+				results[0] = "Address: "+row.getLiteral("currentAddress").toString()
+			
+			if (row.getLiteral("currentWork") != null)
+				results[1] = "Work: "+row.getLiteral("currentWork").toString()
 			
 			if (row.getLiteral("gender") != null)
-				excerpt = "Gender: "+row.getLiteral("gender").toString()
-			if (row.getLiteral("birthday") != null){
-				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt += "Birthday: "+row.getLiteral("birthday").toString()
-			}
-			if (row.getLiteral("occupation") != null){
-				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt += "Occupation: "+row.getLiteral("occupation").toString()
-			}
+				results[2] = "Gender: "+row.getLiteral("gender").toString()
 			
-			results[0] = excerpt
+			if (row.getLiteral("birthday") != null)
+				results[3] = "Birthday: "+row.getLiteral("birthday").toString()
 			
-			//New line
-			String excerpt1 = ""
-			if (row.getLiteral("currentAddress") != null){
-				excerpt1 += "Address: "+row.getLiteral("currentAddress").toString()
-			}
-			if (row.getLiteral("currentWork") != null){
-				excerpt1 += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt1 += "Work: "+row.getLiteral("currentWork").toString()
-			}
-			results[1] = excerpt1
+			if (row.getLiteral("occupation") != null)
+				results[4] = "Occupation: "+row.getLiteral("occupation").toString()			
 		}
 		
 		//--------------------------------------------------------------------
 		//(2) Twitter results
 		//--------------------------------------------------------------------
 		if (source == "twitter")
-		{
-			String excerpt = ""
-			
+		{	
 			if (row.getLiteral("alias") != null)
-				excerpt = "Alias: "+row.getLiteral("alias").toString()
-			if (row.getLiteral("location") != null){
-				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt += "Location: "+row.getLiteral("location").toString()
-			}			
-			
-			results[0] = excerpt
-			
-			//New line
-			String excerpt1 = ""
-			if (row.getResource("url") != null){
-				excerpt1 += "Url: "+row.getResource("url").toString()
-			}
-			results[1] = excerpt1
+				results[0] = "Alias: "+row.getLiteral("alias").toString()
+				
+			if (row.getLiteral("location") != null)
+				results[1] = "Location: "+row.getLiteral("location").toString()
 		}
 		
 		//--------------------------------------------------------------------
 		//(3) Google Knowledge Graph results
 		//--------------------------------------------------------------------
 		if (source == "gkb")
-		{
-			String excerpt = ""
-			
+		{	
 			if (row.getLiteral("label") != null)
-				excerpt = "Label: "+row.getLiteral("label").toString()
-			if (row.getLiteral("comment") != null){
-				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt += "Description: "+row.getLiteral("comment").toString()
-			}
-			
-			results[0] = excerpt
-			
-			//New line
-			String excerpt1 = ""
-			if (row.getResource("url") != null){
-				excerpt1 += "Url: "+row.getResource("url").toString()
-			}
-			results[1] = excerpt1
+				results[0] = row.getLiteral("label").toString()
+			if (row.getLiteral("comment") != null)
+				results[1] = row.getLiteral("comment").toString()
 		}
 		
 		//--------------------------------------------------------------------
@@ -700,27 +795,32 @@ class SearchController {
 		//--------------------------------------------------------------------
 		if (source == "facebook")
 		{
-			String excerpt = ""
-			
 			if (row.getLiteral("label") != null)
-				excerpt = "Label: "+row.getLiteral("label").toString()
-			if (row.getLiteral("comment") != null){
-				excerpt += "&nbsp;&nbsp;&nbsp;&nbsp;"
-				excerpt += "Description: "+row.getLiteral("comment").toString()
-			}
-			
-			results[0] = excerpt
-			
-			//New line
-			String excerpt1 = ""
-			if (row.getResource("url") != null){
-				excerpt1 += "Url: "+row.getResource("url").toString()
-			}
-			results[1] = excerpt1
+				results[0] = row.getLiteral("label").toString()
+			if (row.getLiteral("comment") != null)
+				results[1] = row.getLiteral("comment").toString()
 		}
 		
 		return results
 		
+	}
+	
+	private def prepareExcerptForOrganization(QuerySolution row) {
+		
+		String[] results = new String[5]
+		
+		results[0] = ""
+		results[1] = ""
+		results[2] = ""
+		results[3] = ""
+		results[4] = ""
+		
+		if (row.getLiteral("label") != null)
+			results[0] = row.getLiteral("label").toString()
+		if (row.getLiteral("comment") != null)
+			results[1] = row.getLiteral("comment").toString()
+		
+		return results
 	}
 	
 	//Methods to apply Facets on the results
@@ -786,8 +886,13 @@ class SearchController {
 			String[] excerpts = prepareExcerptForProduct(row)
 			tmpResult["excerpt"] = excerpts[0]
 			tmpResult["excerpt1"] = excerpts[1]
+			tmpResult["excerpt2"] = excerpts[2]
+			tmpResult["excerpt3"] = excerpts[3]
+			tmpResult["excerpt4"] = excerpts[4]
 			tmpResult["image"] = row.getLiteral("depiction").toString()
 	   
+			tmpResult["url"] = ""
+			
 			docs.add(tmpResult)
 			aSize = aSize + 1
 		}
@@ -798,7 +903,7 @@ class SearchController {
 		return [resultList, aSize]
 	}
 	
-	private parseFacetedPersonsToJson(def models, def facetsValues) {
+	private parseFacetedPersonsToJson(def models, def facetsValues, String keyword) {
 		
 		Model model = models["gplus"]
 		
@@ -889,14 +994,26 @@ class SearchController {
 	            String[] excerpts = prepareExcerptForPerson(row, "gplus")
 				tmpResult["excerpt"] = excerpts[0]
 				tmpResult["excerpt1"] = excerpts[1] 
+				tmpResult["excerpt2"] = excerpts[2]
+				tmpResult["excerpt3"] = excerpts[3]
+				tmpResult["excerpt4"] = excerpts[4]
 	            tmpResult["image"] = row.getLiteral("depiction").toString()	
-	           
+				tmpResult["url"] = ""
+				
+				//Rank improvement
+				if (row.getLiteral("name").getString().contains(keyword))
+					tmpResult["rank"] = 2
+				else
+					tmpResult["rank"] = 5
+				
 				docs.add(tmpResult)
 				aSize = aSize + 1
 			}
 			
 		}
 	
+		docs.sort{it.rank}
+		
 		resultList["numberOfResults"] = aSize
 		resultList["results"] = docs
 	

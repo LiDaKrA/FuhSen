@@ -35,12 +35,34 @@ limitations under the License.
 		</g:else>
 	</h2>
 	<div class="subtitle">
-		<g:if test="${(item.excerpt != null)}">
+		<g:if test="${(item.excerpt != "")}">
 			<p>
 				<ddbcommon:stripTags text="${item.excerpt.replaceAll('match', 'strong')}" allowedTags="strong" />
-			</p>
+			</p>			
+		</g:if>
+		<g:if test="${(item.excerpt1 != "")}">
 			<p>
 				<ddbcommon:stripTags text="${item.excerpt1.replaceAll('match', 'strong')}" allowedTags="strong" />
+			</p>			
+		</g:if>
+		<g:if test="${(item.excerpt2 != "")}">
+			<p>
+				<ddbcommon:stripTags text="${item.excerpt2.replaceAll('match', 'strong')}" allowedTags="strong" />
+			</p>			
+		</g:if>
+		<g:if test="${(item.excerpt3 != "")}">
+			<p>
+				<ddbcommon:stripTags text="${item.excerpt3.replaceAll('match', 'strong')}" allowedTags="strong" />
+			</p>			
+		</g:if>
+		<g:if test="${(item.excerpt4 != "")}">
+			<p>
+				<ddbcommon:stripTags text="${item.excerpt4.replaceAll('match', 'strong')}" allowedTags="strong" />
+			</p>			
+		</g:if>
+		<g:if test="${(item.url != "")}">
+			<p>
+				<a href="${item.url}">${item.url}</a>
 			</p>			
 		</g:if>
 	</div>
